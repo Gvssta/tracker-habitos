@@ -1,23 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
 
 function App() {
+  const [novoHabito, setNovoHabito] = useState('');
+  const [habitos, setHabitos] = useState([]);
+
+  function adicionarHabito() {
+    if (novoHabito.trim() === '') return;
+
+    setHabitos([...habitos, novoHabito]);
+    setNovoHabito('');
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ padding: '20px' }}>
+      <h1>Tracker de Hábitos</h1>
+
+      <input
+        type="text"
+        value={novoHabito}
+        onChange={(e) => setNovoHabito(e.target.value)}
+        placeholder="Digite um novo hábito"
+      />
+
+      <button onClick={adicionarHabito}>Adicionar</button>
+
+      <ul>
+        {habitos.map((h, index) => (
+          <li key={index}>{h}</li>
+        ))}
+      </ul>
     </div>
   );
 }
