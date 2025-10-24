@@ -7,8 +7,19 @@ function App() {
   function adicionarHabito() {
     if (novoHabito.trim() === '') return;
 
-    setHabitos([...habitos, novoHabito]);
+    const novo = {
+      nome: novoHabito,
+      feito: false
+    };
+
+    setHabitos([...habitos, novo]);
     setNovoHabito('');
+  }
+
+  function alternarHabito(index) {
+    const novos = [...habitos];
+    novos[index].feito = !novos[index].feito;
+    setHabitos(novos);
   }
 
   return (
@@ -24,9 +35,23 @@ function App() {
 
       <button onClick={adicionarHabito}>Adicionar</button>
 
-      <ul>
+      <ul style={{ listStyle: 'none', padding: 0 }}>
         {habitos.map((h, index) => (
-          <li key={index}>{h}</li>
+          <li key={index} style={{ margin: '8px 0' }}>
+            <input
+              type="checkbox"
+              checked={h.feito}
+              onChange={() => alternarHabito(index)}
+            />
+            <span
+              style={{
+                marginLeft: '10px',
+                textDecoration: h.feito ? 'line-through' : 'none'
+              }}
+            >
+              {h.nome}
+            </span>
+          </li>
         ))}
       </ul>
     </div>
